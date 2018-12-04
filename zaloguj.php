@@ -9,8 +9,8 @@
 	}
 	else
 	{
-		$login = $_POST['klient.login'];
-		$haslo = $_POST['klient.haslo'];
+		//$login = $_POST['klient']['Login'];
+		//$haslo = $_POST['klient/Haslo'];
 
 echo "it works";
 
