@@ -3,16 +3,23 @@
     require_once "connect.php";
 
 	$polaczenie = @new mysqli($host,$db_user,$db_password,$db_name);
-
+	
 	if($polaczenie->connect_errno!=0){
 		echo "Error: ".$polaczenie->connect_errno . "Opis:".$polaczenie->connect_error;
 	}
 	else
 	{
-		//$login = $_POST['klient']['Login'];
-		//$haslo = $_POST['klient/Haslo'];
 
-echo "it works";
+		$login = $_POST['login'];
+		$haslo = $_POST['haslo'];
+
+		echo "oke";
+		$sql = "SELECT * FROM klient WHERE Login='$login' AND Haslo='$haslo'";
+
+		if($rezultat = @$polaczenie->query($sql))
+		{
+				echo "ok";
+		}
 
 		$polaczenie->close();
 	}
