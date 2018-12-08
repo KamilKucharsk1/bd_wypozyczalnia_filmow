@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 04 Gru 2018, 14:35
+-- Czas generowania: 08 Gru 2018, 13:41
 -- Wersja serwera: 10.1.34-MariaDB
 -- Wersja PHP: 7.2.7
 
@@ -81,23 +81,22 @@ INSERT INTO `film` (`id_film`, `tytul`, `rezyser`, `rok_produkcji`, `gatunek`) V
 
 CREATE TABLE `klient` (
   `id_klienta` int(11) NOT NULL,
-  `Imie` varchar(20) CHARACTER SET utf8 COLLATE utf8_polish_ci NOT NULL,
-  `Nazwisko` varchar(30) CHARACTER SET utf8 COLLATE utf8_polish_ci NOT NULL,
-  `Login` varchar(20) CHARACTER SET utf8 COLLATE utf8_polish_ci NOT NULL,
-  `Haslo` varchar(20) CHARACTER SET utf8 COLLATE utf8_polish_ci NOT NULL,
-  `wiek` int(11) NOT NULL,
-  `id_wypozyczenie` int(11) DEFAULT NULL
+  `imie` varchar(20) CHARACTER SET utf8 COLLATE utf8_polish_ci NOT NULL,
+  `nazwisko` varchar(30) CHARACTER SET utf8 COLLATE utf8_polish_ci NOT NULL,
+  `login` varchar(20) CHARACTER SET utf8 COLLATE utf8_polish_ci NOT NULL,
+  `haslo` varchar(20) CHARACTER SET utf8 COLLATE utf8_polish_ci NOT NULL,
+  `wiek` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
 
 --
 -- Zrzut danych tabeli `klient`
 --
 
-INSERT INTO `klient` (`id_klienta`, `Imie`, `Nazwisko`, `Login`, `Haslo`, `wiek`, `id_wypozyczenie`) VALUES
-(1, 'Jan', 'Kowalski', 'janekthebest', 'tajnehaslo', 21, NULL),
-(2, 'Paweł', 'Mazur', 'Mazurek', 'mazurekogorek', 40, NULL),
-(3, 'Wiktor', 'Bąk', 'wiktooor', 'jemnalesniki1234', 9, NULL),
-(4, 'Piotr', 'Kwiecień', 'Piter123', 'plecien', 31, NULL);
+INSERT INTO `klient` (`id_klienta`, `imie`, `nazwisko`, `login`, `haslo`, `wiek`) VALUES
+(1, 'Jan', 'Kowalski', 'janekthebest', 'tajnehaslo', 21),
+(2, 'Paweł', 'Mazur', 'Mazurek', 'mazurekogorek', 40),
+(3, 'Wiktor', 'Bąk', 'wiktooor', 'jemnalesniki1234', 9),
+(4, 'Piotr', 'Kwiecień', 'Piter123', 'plecien', 31);
 
 -- --------------------------------------------------------
 
@@ -153,7 +152,8 @@ CREATE TABLE `wypozyczenie` (
   `id_wypozyczenie` int(11) NOT NULL,
   `id_egzemplarz` int(11) NOT NULL,
   `data_wypozyczenia` date NOT NULL,
-  `data_oddania` date DEFAULT NULL
+  `data_oddania` date DEFAULT NULL,
+  `id_klienta` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_polish_ci;
 
 --
@@ -177,7 +177,7 @@ ALTER TABLE `film`
 --
 ALTER TABLE `klient`
   ADD PRIMARY KEY (`id_klienta`),
-  ADD UNIQUE KEY `Login` (`Login`);
+  ADD UNIQUE KEY `Login` (`login`);
 
 --
 -- Indeksy dla tabeli `pracownik`
@@ -212,7 +212,7 @@ ALTER TABLE `egzemplarz`
 -- AUTO_INCREMENT dla tabeli `film`
 --
 ALTER TABLE `film`
-  MODIFY `id_film` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id_film` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT dla tabeli `klient`
