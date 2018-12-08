@@ -15,10 +15,19 @@
 
 		echo "oke";
 		$sql = "SELECT * FROM klient WHERE Login='$login' AND Haslo='$haslo'";
-
+		echo $login;
 		if($rezultat = @$polaczenie->query($sql))
 		{
-				echo "ok";
+				$ilu_userow = $rezultat->num_rows;
+				if($ilu_userow>0)
+				{
+					$wiersz = $rezultat->fetch_assoc();
+					$user = $wiersz['Login'];
+
+					$rezultat->free_result();
+
+					echo $user;
+				}
 		}
 
 		$polaczenie->close();

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 08 Gru 2018, 13:41
+-- Czas generowania: 08 Gru 2018, 17:27
 -- Wersja serwera: 10.1.34-MariaDB
 -- Wersja PHP: 7.2.7
 
@@ -83,6 +83,7 @@ CREATE TABLE `klient` (
   `id_klienta` int(11) NOT NULL,
   `imie` varchar(20) CHARACTER SET utf8 COLLATE utf8_polish_ci NOT NULL,
   `nazwisko` varchar(30) CHARACTER SET utf8 COLLATE utf8_polish_ci NOT NULL,
+  `email` varchar(40) CHARACTER SET utf8 COLLATE utf8_polish_ci NOT NULL,
   `login` varchar(20) CHARACTER SET utf8 COLLATE utf8_polish_ci NOT NULL,
   `haslo` varchar(20) CHARACTER SET utf8 COLLATE utf8_polish_ci NOT NULL,
   `wiek` int(11) NOT NULL
@@ -92,11 +93,11 @@ CREATE TABLE `klient` (
 -- Zrzut danych tabeli `klient`
 --
 
-INSERT INTO `klient` (`id_klienta`, `imie`, `nazwisko`, `login`, `haslo`, `wiek`) VALUES
-(1, 'Jan', 'Kowalski', 'janekthebest', 'tajnehaslo', 21),
-(2, 'Paweł', 'Mazur', 'Mazurek', 'mazurekogorek', 40),
-(3, 'Wiktor', 'Bąk', 'wiktooor', 'jemnalesniki1234', 9),
-(4, 'Piotr', 'Kwiecień', 'Piter123', 'plecien', 31);
+INSERT INTO `klient` (`id_klienta`, `imie`, `nazwisko`, `email`, `login`, `haslo`, `wiek`) VALUES
+(1, 'Jan', 'Kowalski', '', 'janekthebest', 'tajnehaslo', 21),
+(2, 'Paweł', 'Mazur', '', 'Mazurek', 'mazurekogorek', 40),
+(3, 'Wiktor', 'Bąk', '', 'wiktooor', 'jemnalesniki1234', 9),
+(4, 'Piotr', 'Kwiecień', '', 'Piter123', 'plecien', 31);
 
 -- --------------------------------------------------------
 
