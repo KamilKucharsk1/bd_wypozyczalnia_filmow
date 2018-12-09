@@ -116,6 +116,21 @@
         }
 
 
+        //------------------------------------------------Zapamietywanie wprowadzonych danych
+        $_SESSION['fr_imie'] =$imie;
+        $_SESSION['nazwisko'] =$nazwisko;
+        $_SESSION['fr_login'] =$login;
+        $_SESSION['fr_haslo1'] =$haslo1;
+        $_SESSION['fr_haslo2'] =$haslo2;
+        $_SESSION['fr_wiek'] =$wiek;
+        $_SESSION['fr_email'] =$email;
+        if(isset($_POST['regulamin'])) $_SESSION['fr_regulamin'] =true;
+
+
+
+
+
+
 
         //----------------------------------------------Sprawdzanie czy uzytkownik juz istnieje
 
@@ -219,7 +234,11 @@
 
 <form method="post">
 
-    Imię: <input type="text" name="imie"/><br/>
+    Imię: <input type="text" value="<?php
+    if(isset($_SESSION['fr_imie']))
+        echo $_SESSION['fr_imie'];
+        unset($_SESSION['fr_imie']);
+    ?>" name="imie"/><br/>
     <?php
         if(isset($_SESSION['e_imie']))
         {
@@ -227,8 +246,23 @@
             unset($_SESSION['e_imie']);
         }
     ?>
-    Nazwisko: <input type="text" name="nazwisko"/><br/>
-    Email: <input type="text" name="email"/><br/>
+    Nazwisko: <input type="text" value="<?php
+    if(isset($_SESSION['fr_nazwisko']))
+        echo $_SESSION['fr_nazwisko'];
+        unset($_SESSION['fr_nazwisko']);
+    ?>" name="nazwisko"/><br/>
+    <?php
+        if(isset($_SESSION['e_nazwisko']))
+        {
+            echo '<div class="error">'.$_SESSION['e_nazwisko'].'</div>';
+            unset($_SESSION['e_nazwisko']);
+        }
+    ?>
+    Email: <input type="text" value="<?php
+    if(isset($_SESSION['fr_email']))
+        echo $_SESSION['fr_email'];
+        unset($_SESSION['fr_email']);
+    ?>" name="email"/><br/>
     <?php
         if(isset($_SESSION['e_email']))
         {
@@ -236,7 +270,11 @@
             unset($_SESSION['e_email']);
         }
     ?>
-    Wiek: <input type="text" name="wiek"/><br/>
+    Wiek: <input type="text" value="<?php
+    if(isset($_SESSION['fr_wiek']))
+        echo $_SESSION['fr_wiek'];
+        unset($_SESSION['fr_wiek']);
+    ?>" name="wiek"/><br/>
     <?php
         if(isset($_SESSION['e_wiek']))
         {
@@ -244,7 +282,11 @@
             unset($_SESSION['e_wiek']);
         }
     ?>
-    Login: <input type="text" name="login"/><br/>
+    Login: <input type="text" value="<?php
+    if(isset($_SESSION['fr_login']))
+        echo $_SESSION['fr_login'];
+        unset($_SESSION['fr_login']);
+    ?>" name="login"/><br/>
     <?php
         if(isset($_SESSION['e_login']))
         {
@@ -252,7 +294,11 @@
             unset($_SESSION['e_login']);
         }
     ?>
-    Hasło: <input type="password" name="haslo1"/><br/>
+    Hasło: <input type="password" value="<?php
+    if(isset($_SESSION['fr_haslo1']))
+        echo $_SESSION['fr_haslo1'];
+        unset($_SESSION['fr_haslo1']);
+    ?>" name="haslo1"/><br/>
     <?php
         if(isset($_SESSION['e_haslo']))
         {
@@ -260,10 +306,22 @@
             unset($_SESSION['e_haslo']);
         }
     ?>
-    Powtórz hasło: <input type="password" name="haslo2"/><br/>
+    Powtórz hasło: <input type="password" value="<?php
+    if(isset($_SESSION['fr_haslo2']))
+        echo $_SESSION['fr_haslo2'];
+        unset($_SESSION['fr_haslo2']);
+    ?>" name="haslo2"/><br/>
 
     <label>
-        <input type="checkbox" name="regulamin"/> Akceptuję regulamin
+        <input type="checkbox" name="regulamin" <?php
+        if(isset($_SESSION['fr_regulamin']))
+        {
+            echo "checked";
+            unset($_SESSION['fr_regulamin']);
+        }
+        
+        
+        ?> /> Akceptuję regulamin
     </label>
     <?php
         if(isset($_SESSION['e_regulamin']))

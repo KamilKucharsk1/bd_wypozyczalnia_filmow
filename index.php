@@ -1,3 +1,7 @@
+<?php
+	session_start();
+?>
+
 <!DOCTYPE HTML>
 <html lang="pl">
 <head>
@@ -16,7 +20,12 @@ Hasło: <br/> <input type="password" name="haslo"/><br/><br/>
 <input type="submit" value="Zaloguj się"/>
 
 </form>
-
+<?php
+	if(isset($_SESSION['blad']))
+		echo '<br/>'.$_SESSION['blad'].'<br/>';
+?>
+<br/>
+<a href="rejestracja.php">Zarejestruj się w systemie!</a>
 
 </body>
 </html>

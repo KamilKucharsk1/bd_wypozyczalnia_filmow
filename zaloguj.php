@@ -1,6 +1,8 @@
 <?php
-
     require_once "connect.php";
+		session_start();
+
+	
 
 	$polaczenie = @new mysqli($host,$db_user,$db_password,$db_name);
 	
@@ -12,29 +14,49 @@
 
 		$login = $_POST['login'];
 		$haslo = $_POST['haslo'];
+		//$haslo_hash = password_hash($haslo, PASSWORD_DEFAULT);
 
-		echo "oke";
-		$sql = "SELECT * FROM klient WHERE Login='$login' AND Haslo='$haslo'";
-		echo $login;
+		$sql = "SELECT * FROM klient WHERE Login='$login'";
 		if($rezultat = @$polaczenie->query($sql))
 		{
-				$ilu_userow = $rezultat->num_rows;
-				if($ilu_userow>0)
+			$ilu_userow = $rezultat->num_rows;
+			if($ilu_userow>0)
+			{
+				$wiersz = $rezultat->fetch_assoc();
+
+				if(password_verify($haslo,$wiersz['haslo']))
 				{
-					$wiersz = $rezultat->fetch_assoc();
-					$user = $wiersz['Login'];
 
-					$rezultat->free_result();
-
-					echo $user;
+				$_SESSION['login'] = $wiersz['login'];
+				$_SESSION['haslo'] = $wiersz['haslo'];
+				$_SESSION['imie'] = $wiersz['imie'];
+				$_SESSION['nazwisko'] = $wiersz['nazwisko'];
+				$_SESSION['email'] = $wiersz['email'];
+				$_SESSION['id_klienta'] = $wiersz['id_klienta'];
+				
+				
+				unset($_SESSION['blad']);
+				$rezultat->free_result();
+				$_SESSION['zalogowany']=true;
+				
+				header('Location: stronaglowna.php');
 				}
+				else
+				{
+					$_SESSION['blad'] = '<span style="color:red">Nieprawidłowy login lub hasło!</span>';
+					header('Location: index.php');
+				}
+			}
+			else
+			{
+				$_SESSION['blad'] = '<span style="color:red">Nieprawidłowy login
+				lub hasło!</span>';
+				header('Location: index.php');
+			}
+			
 		}
 
 		$polaczenie->close();
 	}
-
-	
-
-
 
 ?>
