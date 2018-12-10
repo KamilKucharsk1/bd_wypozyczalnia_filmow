@@ -17,12 +17,6 @@
             $_SESSION['e_imie']="Imię musi posiadać od 3 do 20 znaków!";
         }  
 
-        //if(ctype_alnum($imie)==false)
-        //{
-        //    $wszystko_OK=false;
-        //    $_SESSION['e_imie'] = "Imie może składać się tylko z liter i cyfr (bez polskich znaków)";
-        //}
-
         //---------------------------------------------Sprawdzanie dlugosci nazwiska
         $nazwisko = $_POST['nazwisko'];
         
@@ -37,19 +31,6 @@
         //    $wszystko_OK=false;
         //    $_SESSION['e_nazwisko'] = "Nazwisko może składać się tylko z liter i cyfr (bez polskich znaków)";
         //}
-
-
-        //---------------------------------------------Sprawdzanie poprawnosci email
-        $email = $_POST['email'];
-        $emailB = filter_var($email, FILTER_SANITIZE_EMAIL);    //email Bezpieczny
-
-        if((filter_var($emailB, FILTER_SANITIZE_EMAIL)==false) || ($emailB!=$email))  // sanityzacja emaila
-        {
-            $wszystko_OK=false;
-            $_SESSION['e_email']="Podja poprawny adres email!";
-        }
-
-
 
 
         //----------------------------------------------Sprawdzenie dlugosci loginu
@@ -81,40 +62,6 @@
 
 
 
-        //----------------------------------------------Sprawdzenie wieku
-        $wiek = $_POST['wiek'];
-
-        if(($wiek<13) || ($wiek>120))
-        {
-            $wszystko_OK = false;
-            $_SESSION['e_wiek']="Podaj swój wiek w latach!";
-        }  
-
-
-        //---------------------------------------------Sprawdzanie akceptacji regulaminu
-
-        if(!isset($_POST['regulamin']))
-        {
-            $wszystko_OK=false;
-            $_SESSION['e_regulamin']="Potwierdz akceptacje regulaminu!";
-        }
-
-
-
-        //---------------------------------------------Sprawdzanie reCAPTCHA
-
-        $sekret = "6LcWgH8UAAAAAMZi7kRkzl97bmZ4JMtk1FIP9630";
-
-        $sprawdz = file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret='.$sekret.'&response='.$_POST['g-recaptcha-response']);
-
-        $odpowiedz = json_decode($sprawdz);
-
-        if($odpowiedz->success == false)
-        {
-            $wszystko_OK=false;
-            $_SESSION['e_bot']="Potwierdz, że nie jesteś botem!";
-        }
-
 
         //------------------------------------------------Zapamietywanie wprowadzonych danych
         $_SESSION['fr_imie'] =$imie;
@@ -122,14 +69,6 @@
         $_SESSION['fr_login'] =$login;
         $_SESSION['fr_haslo1'] =$haslo1;
         $_SESSION['fr_haslo2'] =$haslo2;
-        $_SESSION['fr_wiek'] =$wiek;
-        $_SESSION['fr_email'] =$email;
-        if(isset($_POST['regulamin'])) $_SESSION['fr_regulamin'] =true;
-
-
-
-
-
 
 
         //----------------------------------------------Sprawdzanie czy uzytkownik juz istnieje
@@ -145,22 +84,9 @@
             }
             else
             {
-                //czy email juz istnieje
-                $rezultat =$polaczenie->query("SELECT id_klient FROM klient WHERE email='$email'");
-
-                if(!$rezultat) throw new Exception($polaczenie->error);
-
-                $ile_takich_maili = $rezultat->num_rows;
-                if($ile_takich_maili>0)
-                {
-                    $wszystko_OK=false;
-                    $_SESSION['e_email']="Istnieje już konto przypisane do tego adresu email!";
-                }
-
-
-
+                
                 //czy login jest juz zarezerwowany
-                $rezultat =$polaczenie->query("SELECT id_klient FROM klient WHERE login='$login'");
+                $rezultat =$polaczenie->query("SELECT id_pracownik FROM pracownik WHERE login='$login'");
 
                 if(!$rezultat) throw new Exception($polaczenie->error);
 
@@ -168,22 +94,19 @@
                 if($ile_takich_loginow>0)
                 {
                     $wszystko_OK=false;
-                    $_SESSION[e_login]="Istnieje już użytkownik o takim loginie!";
+                    $_SESSION[e_login]="Istnieje już pracownik o takim loginie!";
                 }
 
 
 
                         if($wszystko_OK == true)
                             {
-                              if($polaczenie->query("INSERT INTO `klient` (`id_klient`, `imie`, `nazwisko`, `email`, `login`, `haslo`, `wiek`) VALUES (NULL, '$imie', '$nazwisko', '$email', '$login', '$haslo_hash', '$wiek')"))
+                              if($polaczenie->query("INSERT INTO `pracownik` (`id_pracownik`, `imie`, `nazwisko`, `login`, `haslo`) VALUES (NULL, '$imie', '$nazwisko', '$login', '$haslo_hash')"))
                               {
                                 $_SESSION['udanarejestracja']=true;
-                                header('Location: powitanie.php');          // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< przeniesienie na strone po rejestracji
+                                echo "Nowy pracownik został dodany!";          
                               }
-                              else
-                              {
-
-                              }
+                             
                             }
 
 
@@ -230,7 +153,7 @@
 
 <body>
 
-	<h1>Rejestracja nowego użytkownika</h1>
+	<h1>Rejestracja nowego pracownika</h1>
 
 <form method="post">
 
@@ -258,30 +181,7 @@
             unset($_SESSION['e_nazwisko']);
         }
     ?>
-    Email: <input type="text" value="<?php
-    if(isset($_SESSION['fr_email']))
-        echo $_SESSION['fr_email'];
-        unset($_SESSION['fr_email']);
-    ?>" name="email"/><br/>
-    <?php
-        if(isset($_SESSION['e_email']))
-        {
-            echo '<div class="error">'.$_SESSION['e_email'].'</div>';
-            unset($_SESSION['e_email']);
-        }
-    ?>
-    Wiek: <input type="text" value="<?php
-    if(isset($_SESSION['fr_wiek']))
-        echo $_SESSION['fr_wiek'];
-        unset($_SESSION['fr_wiek']);
-    ?>" name="wiek"/><br/>
-    <?php
-        if(isset($_SESSION['e_wiek']))
-        {
-            echo '<div class="error">'.$_SESSION['e_wiek'].'</div>';
-            unset($_SESSION['e_wiek']);
-        }
-    ?>
+    
     Login: <input type="text" value="<?php
     if(isset($_SESSION['fr_login']))
         echo $_SESSION['fr_login'];
@@ -312,36 +212,9 @@
         unset($_SESSION['fr_haslo2']);
     ?>" name="haslo2"/><br/>
 
-    <label>
-        <input type="checkbox" name="regulamin" <?php
-        if(isset($_SESSION['fr_regulamin']))
-        {
-            echo "checked";
-            unset($_SESSION['fr_regulamin']);
-        }
-        
-        
-        ?> /> Akceptuję regulamin
-    </label>
-    <?php
-        if(isset($_SESSION['e_regulamin']))
-        {
-            echo '<div class="error">'.$_SESSION['e_regulamin'].'</div>';
-            unset($_SESSION['e_regulamin']);
-        }
-    ?>
-
-    <div class="g-recaptcha" data-sitekey="6LcWgH8UAAAAAAfKCz3wSOpP_KNjIxNmieTMKkAf"></div>
-    <?php
-        if(isset($_SESSION['e_bot']))
-        {
-            echo '<div class="error">'.$_SESSION['e_bot'].'</div>';
-            unset($_SESSION['e_bot']);
-        }
-    ?>
 
     <br/>
-    <input type="submit" value="Zarejestruj się"/>
+    <input type="submit" value="Zarejestruj"/>
 
 
 
