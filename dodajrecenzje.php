@@ -28,8 +28,12 @@
 		}
 		else
 		{
+<<<<<<< HEAD
 			$_SESSION['blad'] = '<span style="color:red">Nieprawidłowy login
 			lub hasło!</span>';
+=======
+			$_SESSION['blad'] = '<span style="color:red">Nieprawidłowe dane wejściowe!</span>';
+>>>>>>> Artur
 			header('Location: stronaglowna.php');
 		}
 		$polaczenie->close();

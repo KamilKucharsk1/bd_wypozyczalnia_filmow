@@ -22,9 +22,9 @@
 
 <body>
 <?php
-	echo "Witaj ".$_SESSION['imie']." ".$_SESSION['nazwisko']."!<br/><br/>";
+	echo "Witaj ".$_SESSION['imie']." ".$_SESSION['nazwisko'].'! [ <a href="logout.php">Wyloguj się!</a> ]</p><br/><br/>';
 	
-	echo "Dodaj recenzję filmu:<br/>";
+	echo "<b>Dodaj recenzję filmu:</b><br/><br/>";
 ?>
 
 
@@ -38,6 +38,20 @@ Opis: <br/> <input type="text" name="opis"/><br/><br/>
 </form>
 
 <?php
+	echo "<b>Wypożycz swój ulubiony film:</b><br/><br/>";
+?>
+
+<form action="dodajwypozyczenie.php" method="post">
+
+Numer egzemplarza: <br/> <input type="text" name="numer"/><br/>
+Data rezerwacji: <br/> <input type="date" name="data"/><br/><br/>
+<input type="submit" value="Zarezerwuj pozycję"/><br/><br/>
+
+</form>
+
+
+<?php
+	if(isset($_SESSION['blad']))	echo $_SESSION['blad'];
 	
 	$polaczenie = @new mysqli($host,$db_user,$db_password,$db_name);
 	
@@ -51,15 +65,35 @@ Opis: <br/> <input type="text" name="opis"/><br/><br/>
 		echo "Dostępne filmy: <br/>";
 		
 		
-		$sql = "SELECT id_film, tytul, rezyser, rok_produkcji, gatunek FROM `film`";	
-		
+		$sql = "SELECT id_film, tytul, rezyser, rok_produkcji, gatunek FROM `film`";
+
 		$rezultat = @$polaczenie->query($sql);
 		
 		if($rezultat->num_rows > 0)
 		{
 			while($row = $rezultat->fetch_assoc()) 
 			{
-			echo "<b>".$row["id_film"]."</b> "."<b>Tytul:</b> " . $row["tytul"]. " <b>Reżyser: </b>" . $row["rezyser"]. " <b>Gatunek:</b> " . $row["gatunek"]. "<br><br/>";
+				$idFilm = $row["id_film"];
+				$sqlSrednia = "SELECT AVG(ocena) average FROM recenzja WHERE id_film = '$idFilm'";
+				$srednia = @$polaczenie->query($sqlSrednia);
+				
+				$sqlEgzemplarze = "SELECT * FROM egzemplarz WHERE status = 'w' AND id_film = '$idFilm'";
+				$egzemplarze = @$polaczenie->query($sqlEgzemplarze);
+				
+				echo "<b>".$row["id_film"]."</b> "."<b>Tytul:</b> " . $row["tytul"]. " <b>Reżyser: </b>" . $row["rezyser"]. " <b>Gatunek:</b> " . $row["gatunek"];
+				
+				if($row2 = $srednia->fetch_assoc())
+				{
+					echo "<b> Średnia ocena: </b>".$row2['average'];
+				}
+				
+				echo "<b> Dostępne egzemplarze: </b>";
+				
+				foreach($egzemplarze as $row3) {
+					echo $row3['id_egzemplarz'].", ";
+				}
+				
+				echo "<br/><br/>";
 			}
 			
 		}

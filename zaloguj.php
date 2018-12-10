@@ -1,8 +1,13 @@
 <?php
     require_once "connect.php";
-		session_start();
-
 	
+	session_start();
+	
+	if ((!isset($_POST['login'])) || (!isset($_POST['haslo'])))
+	{
+		header('Location: index.php');
+		exit();
+	}
 
 	$polaczenie = @new mysqli($host,$db_user,$db_password,$db_name);
 	
@@ -14,7 +19,7 @@
 
 		$login = $_POST['login'];
 		$haslo = $_POST['haslo'];
-		//$haslo_hash = password_hash($haslo, PASSWORD_DEFAULT);
+		
 
 		$sql = "SELECT * FROM klient WHERE Login='$login'";
 		if($rezultat = @$polaczenie->query($sql))
