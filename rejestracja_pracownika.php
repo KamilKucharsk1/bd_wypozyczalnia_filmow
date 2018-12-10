@@ -86,7 +86,7 @@
             {
                 
                 //czy login jest juz zarezerwowany
-                $rezultat =$polaczenie->query("SELECT id_pracownik FROM pracownik WHERE login='$login'");
+                $rezultat =$polaczenie->query("SELECT `id_pracownik` FROM `pracownik` WHERE login='$login'");
 
                 if(!$rezultat) throw new Exception($polaczenie->error);
 

@@ -44,7 +44,7 @@ Opis: <br/> <input type="text" name="opis"/><br/><br/>
 <form action="dodajwypozyczenie.php" method="post">
 
 Numer egzemplarza: <br/> <input type="text" name="numer"/><br/>
-Data rezerwacji: <br/> <input type="date" name="data"/><br/><br/>
+Data rezerwacji (Format: YYYY-MM-DD): <br/> <input type="text" name="data"/><br/><br/>
 <input type="submit" value="Zarezerwuj pozycję"/><br/><br/>
 
 </form>
@@ -105,7 +105,7 @@ Data rezerwacji: <br/> <input type="date" name="data"/><br/><br/>
 		echo "Twoje wypożyczenia: <br/>";
 		
 		$id = $_SESSION['id_klienta'];
-		$sql = "SELECT id_egzemplarz, data_oddania, data_wypozyczenia FROM wypozyczenie WHERE id_klienta = '$id'";	
+		$sql = "SELECT id_egzemplarz, data_oddania, data_wypozyczenia FROM wypozyczenie WHERE id_klienta = $id'";	
 		
 		$rezultat = @$polaczenie->query($sql);
 		
