@@ -214,7 +214,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Rejestracja</title>
-    <!--<link rel="stylesheet" href="style1.css" />-->
+    <link rel="stylesheet" href="style_rejestracja.css" />
     <link href="https://fonts.googleapis.com/css?family=Merienda:400,700&amp;subset=latin-ext" rel="stylesheet">
     <script src='https://www.google.com/recaptcha/api.js'></script>
 
@@ -229,9 +229,10 @@
 </head>
 
 <body>
-
+<div id=naglowek>
 	<h1>Rejestracja nowego użytkownika</h1>
-
+    </div>
+<div id=container>
 <form method="post">
 
     Imię: <input type="text" value="<?php
@@ -346,7 +347,7 @@
 
 
 </form>
-
+    </div>
 
 
 </body>

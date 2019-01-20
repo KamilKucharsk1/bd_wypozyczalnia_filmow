@@ -21,7 +21,7 @@
 		$haslo = $_POST['haslo'];
 		
 
-		$sql = "SELECT * FROM klient WHERE Login='$login'";
+		$sql = "SELECT * FROM klient WHERE login='$login'";
 		if($rezultat = @$polaczenie->query($sql))
 		{
 			$ilu_userow = $rezultat->num_rows;

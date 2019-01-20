@@ -39,7 +39,9 @@ if(isset($_SESSION['e_bot'])) unset($_SESSION['e_bot']);
 <html lang="pl">
 <head>
 	<meta charset="utf-8" />
-	<meta http-equiv="X-UA-Compatible" content ="IE=edge,chrome=1" />
+    <meta http-equiv="X-UA-Compatible" content ="IE=edge,chrome=1" />
+    <link rel="stylesheet" href="style_index.css" type="text/css" />
+
 </head>
 
 <body>
