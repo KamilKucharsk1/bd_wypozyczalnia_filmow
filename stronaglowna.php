@@ -52,7 +52,7 @@
 
 		</form>
 
-
+		
 		<?php
 			if(isset($_SESSION['blad']))	echo $_SESSION['blad'];
 			
@@ -115,7 +115,7 @@
 				echo "<h2>Twoje wypożyczenia:</h2>";
 				
 				$id = $_SESSION['id_klienta'];
-				$sql = "SELECT id_egzemplarz, data_oddania, data_wypozyczenia FROM wypozyczenie WHERE id_klienta = $id'";	
+				$sql = "SELECT id_egzemplarz, data_oddania, data_wypozyczenia FROM wypozyczenie WHERE id_klient = '$id'";	
 				
 				error_reporting(E_ALL ^ E_NOTICE); 
 				$rezultat = @$polaczenie->query($sql);

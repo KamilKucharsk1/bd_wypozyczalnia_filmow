@@ -137,7 +137,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Rejestracja</title>
-    <!--<link rel="stylesheet" href="style1.css" />-->
+    <link rel="stylesheet" href="style_rejestracja_pracownika.css" >
     <link href="https://fonts.googleapis.com/css?family=Merienda:400,700&amp;subset=latin-ext" rel="stylesheet">
     <script src='https://www.google.com/recaptcha/api.js'></script>
 
@@ -152,7 +152,7 @@
 </head>
 
 <body>
-
+<div id="container">
 	<h1>Rejestracja nowego pracownika</h1>
 
 <form method="post">
@@ -219,7 +219,7 @@
 
 
 </form>
-
+    </div>
 
 
 </body>

@@ -17,7 +17,7 @@
         
                     
 
-            $sql = "UPDATE `egzemplarz` SET `status` = $nowystatus WHERE `egzemplarz`.`id_egzemplarz` = $numer";
+            $sql = "UPDATE egzemplarz SET status = ".$nowystatus." WHERE id_egzemplarz = .$numer;
             
             if($rezultat = @$polaczenie->query($sql))
             {
@@ -25,9 +25,8 @@
             }
             else
             {
-                //$_SESSION['blad'] = '<span style="color:red">Nieprawidłowy login
-                //lub hasło!</span>';
-                //header('Location: stronaglowna.php');
+               // $_SESSION['blad'] = '<span style="color:red">Nieprawidłowy login lub hasło!</span>';
+               // header("Location: stronaglowna.php");
             }
         
         header('Location: stronaglowna_pracownik.php');

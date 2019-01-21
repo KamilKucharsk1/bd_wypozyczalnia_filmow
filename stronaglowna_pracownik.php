@@ -46,6 +46,7 @@
 	if(isset($_SESSION['blad']))	echo $_SESSION['blad'];
 	
 	$polaczenie = @new mysqli($host,$db_user,$db_password,$db_name);
+
 	
 	if($polaczenie->connect_errno!=0){
 		echo "Error: ".$polaczenie->connect_errno . "Opis:".$polaczenie->connect_error;
@@ -120,6 +121,37 @@
     }
 ?>
 
+<h2>Wypożyczenia:</h2><br/><br/>
+<?php
+echo "Lista wypożyczeń: <br/>";
+	$sql = "SELECT id_wypozyczenie, id_egzemplarz, data_wypozyczenia, data_oddania, id_klient FROM `wypozyczenie`";
+
+		$rezultat = @$polaczenie->query($sql);
+		echo '<table style="width:100%">';
+					
+				echo '<tr><th>id wypozyczenia</th><th>id egzemplarz</th> <th>Data wypożyczenia</th><th>Data oddania</th><th>id klienta</th></tr>';
+		if($rezultat->num_rows > 0)
+		{
+			while($row = $rezultat->fetch_assoc()) 
+			{
+				$idWypozyczenie = $row["id_wypozyczenie"];
+				
+				$sqlEgzemplarze = "SELECT * FROM wypozyczenie WHERE id_wypozyczenie = '$idWypozyczenie'";
+				$egzemplarze = @$polaczenie->query($sqlEgzemplarze);
+				
+				//echo "<b>".$row["id_film"]."</b> "."<b>Tytul:</b> " . $row["tytul"]. " <b>Reżyser: </b>" . $row["rezyser"]. " <b>Gatunek:</b> " . $row["gatunek"];
+				echo "<tr><th> " . $row["id_wypozyczenie"]. " </th><th>" . $row["id_egzemplarz"]. " </th><th>" . $row["data_wypozyczenia"]. " </th><th>" . $row["data_oddania"]. " </th><th>" . $row["id_klient"]."</th>";
+
+
+				
+				echo "</th></tr>";
+				
+			}
+			echo "</table><br/>";
+        }
+        ?>
+
+
 
 
 
@@ -184,12 +216,22 @@ echo "Lista filmów: <br/>";
     <form action="usunegzemplarz.php" method="post">
     Numer egzemplarza: <input type="text" name="numer"/><br/>
    <input type="submit" value="Usuń"/><br/><br/>
-    </form>
+	</form>
+	
+
+	<h2>Dodaj tytuł:</h2>
+	<form action="dodajtytul.php" method="post">
+	Nowy tytuł: <input type="text" name="tytul"/><br/>
+	Reżyser: <input type='text' name="rezyser"/><br/>
+	Rok produkcji: <input type='text' name="rok_produkcji"/><br/>
+	Gatunek: <input type='text' name="gatunek"/><br/>
+	<input type="submit" value="Dodaj do kolekcji"/><br/><br/>
+
 <!--
      <h2>Zmien status filmu:</h2>
-    <form action="edytujegzemplarz.php" method="post">
+    <form action="edytujpozycje.php" method="post">
     Numer egzemplarza: <input type="text" name="numer"/><br/>
-    Nowy status: <input type="text" name="nowystatus"/><br/>
+	Nowy status: <input type="text" name="nowystatus"/><br/>
    <input type="submit" value="Zmień"/><br/><br/>
     </form>
     -->

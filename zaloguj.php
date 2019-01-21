@@ -37,7 +37,7 @@
 				$_SESSION['imie'] = $wiersz['imie'];
 				$_SESSION['nazwisko'] = $wiersz['nazwisko'];
 				$_SESSION['email'] = $wiersz['email'];
-				$_SESSION['id_klienta'] = $wiersz['id_klienta'];
+				$_SESSION['id_klienta'] = $wiersz['id_klient'];
 				
 				
 				unset($_SESSION['blad']);
@@ -49,7 +49,7 @@
 			}
 				else
 				{
-					$sql = "SELECT * FROM pracownik WHERE Login='$login'";
+					$sql = "SELECT * FROM pracownik WHERE login='$login'";
 				if($rezultat = @$polaczenie->query($sql))
 				{
 					$ilu_userow = $rezultat->num_rows;

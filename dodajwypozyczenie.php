@@ -16,9 +16,8 @@
 		$data = $_POST['data'];
 		$id = $_SESSION['id_klienta'];
 		
-		//$date = date("Y-m-d", strtotime(str_replace('-', '/', $data)));
-		
-		$sql = "INSERT INTO `wypozyczenie` (`id_wypozyczenie`, `id_egzemplarz`, `data_wypozyczenia`, `data_oddania`, `id_klienta`) VALUES (NULL, '$numer', '$date', NULL, '$id')";
+		$date = date("Y-m-d", strtotime(str_replace('-', '/', $data)));
+		$sql = "INSERT INTO `wypozyczenie` (`id_wypozyczenie`, `id_egzemplarz`, `data_wypozyczenia`, `data_oddania`, `id_klient`) VALUES (NULL, '$numer', '$date', NULL, '$id')";
 		$sqlUpdate = "UPDATE egzemplarz SET status = 'z' WHERE egzemplarz.id_egzemplarz = '$numer'";
 		
 		if($rezultat = @$polaczenie->query($sql))
