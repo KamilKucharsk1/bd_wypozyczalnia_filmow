@@ -21,7 +21,7 @@
 		$haslo = $_POST['haslo'];
 		
 
-		$sql = "SELECT * FROM klient WHERE login='$login'";
+		$sql = "SELECT * FROM klient WHERE Login='$login'";
 		if($rezultat = @$polaczenie->query($sql))
 		{
 			$ilu_userow = $rezultat->num_rows;
@@ -37,7 +37,7 @@
 				$_SESSION['imie'] = $wiersz['imie'];
 				$_SESSION['nazwisko'] = $wiersz['nazwisko'];
 				$_SESSION['email'] = $wiersz['email'];
-				$_SESSION['id_klienta'] = $wiersz['id_klient'];
+				$_SESSION['id_klienta'] = $wiersz['id_klienta'];
 				
 				
 				unset($_SESSION['blad']);
@@ -49,7 +49,7 @@
 			}
 				else
 				{
-					$sql = "SELECT * FROM pracownik WHERE login='$login'";
+					$sql = "SELECT * FROM pracownik WHERE Login='$login'";
 				if($rezultat = @$polaczenie->query($sql))
 				{
 					$ilu_userow = $rezultat->num_rows;
